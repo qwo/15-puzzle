@@ -1,9 +1,14 @@
 var React = require('react');
 var Store = require('../Store');
 var Style = require('../Style');
+var Actions = require('../Actions');
 var Board = require('./Board');
 
 var AppRoot = React.createClass({
+  _handleShuffleClick: function () {
+    Actions.shuffleBoard();
+  },
+
   getInitialState: function() {
     return Store.getState();
   },
@@ -31,6 +36,9 @@ var AppRoot = React.createClass({
           })
         }</p>
         <Board board={this.state.board}/>
+        <button style={Style.ShuffleButton} onClick={this._handleShuffleClick}>
+          Shuffle
+        </button>
       </div>
     );
   }

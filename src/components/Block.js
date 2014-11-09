@@ -13,7 +13,7 @@ var Block = PureRenderClassConstructor({
     var style;
     if (this.props.piece === 0) {
       style = Style.Block.Empty;
-      entry = '';
+      entry = '_';
     } else {
       style = Style.Block.Base;
       entry = this.props.piece;

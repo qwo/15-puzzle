@@ -7,6 +7,11 @@ var Actions = {
       actionType: Constants.HANDLE_BLOCK_CLICK,
       piece: piece
     });
+  },
+  shuffleBoard: function () {
+    Dispatcher.handleViewAction({
+      actionType: Constants.SHUFFLE_BOARD
+    });
   }
 };
 
