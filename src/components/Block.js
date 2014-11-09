@@ -1,4 +1,5 @@
 var React = require('react');
+var assign = require('react/lib/Object.assign');
 var Style = require('../Style');
 var Actions = require('../Actions');
 var PureRenderClassConstructor = require('./utils/PureRenderClassConstructor');
@@ -9,18 +10,17 @@ var Block = PureRenderClassConstructor({
   },
 
   render: function () {
-    var entry;
-    var style;
-    if (this.props.piece === 0) {
-      style = Style.Block.Empty;
-      entry = '_';
-    } else {
-      style = Style.Block.Base;
-      entry = this.props.piece;
+    var style = assign({}, Style.Block, {
+      top: this.props.top,
+      left: this.props.left
+    });
+    var entry = this.props.piece;
+    if (entry === 0) {
+      return null;
     }
     return (
       <div style={style} onClick={this._handleClick}>
-        {entry}
+        <div style={Style.Card}>{entry}</div>
       </div>
     );
   }
