@@ -8,6 +8,18 @@ var CHANGE_EVENT = 'change';
 
 var _state = assign({}, State);
 
+function handleBlockClick(piece) {
+  var pieceSpace = _state.board.indexOf(piece);
+  var emptySpace = _state.board.indexOf(0);
+  if (emptySpace % 4 === pieceSpace % 4) {
+    console.log('sameColumn');
+    //handleColumnShift(pieceSpace, emptySpace);
+  } else if ((emptySpace / 4 | 0) === (pieceSpace / 4 | 0)) {
+    console.log('sameRow');
+    //handleColumnShift(pieceSpace, emptySpace);
+  }
+}
+
 var Store = assign({}, EventEmitter.prototype, {
 
   emitChange: function() {
@@ -47,7 +59,11 @@ var Store = assign({}, EventEmitter.prototype, {
   dispatcherIndex: Dispatcher.register(function(payload) {
     var action = payload.action;
 
-    switch (action) {
+    switch (action.actionType) {
+      case Constants.HANDLE_BLOCK_CLICK:
+        handleBlockClick(action.piece);
+        Store.emitChange()
+        break;
     }
 
     return true;
