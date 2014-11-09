@@ -4,6 +4,9 @@ var PureRenderClassConstructor = require('./utils/PureRenderClassConstructor');
 
 var Block = PureRenderClassConstructor({
   render: function () {
+    if (this.props.piece === 0) {
+      return null;
+    }
     return (
       <div style={Style.Block}>
         {this.props.piece}

@@ -9,7 +9,7 @@ var Board = PureRenderClassConstructor({
       var row = i / 4 | 0;
       agg[row].push(
         <Block
-          key={i}
+          key={piece}
           piece={piece}
         />
       );

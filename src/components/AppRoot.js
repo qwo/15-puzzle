@@ -27,7 +27,7 @@ var AppRoot = React.createClass({
         <p>My state:</p>
         <p>{
           this.state.board.map(function (a) {
-            return (<span style={{margin: 10}}>{a}</span>)
+            return (<span key={a} style={{margin: 10}}>{a}</span>)
           })
         }</p>
         <Board board={this.state.board}/>
