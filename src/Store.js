@@ -91,8 +91,7 @@ function handleBlockClick(piece) {
   }
 }
 
-var Store = assign({}, EventEmitter.prototype, {
-
+var BaseStore = assign({}, EventEmitter.prototype, {
   emitChange: function() {
     this.emit(CHANGE_EVENT);
   },
@@ -109,7 +108,30 @@ var Store = assign({}, EventEmitter.prototype, {
    */
   removeChangeListener: function(callback) {
     this.removeListener(CHANGE_EVENT, callback);
-  },
+  }
+});
+
+function createStore(dispatcherCallback, methods) {
+  return assign({}, BaseStore, methods, {
+    dispatcherIndex: Dispatcher.register(dispatcherCallback)
+  });
+}
+
+var Store = createStore(function(payload) {
+    var action = payload.action;
+
+    switch (action.actionType) {
+      case Constants.HANDLE_BLOCK_CLICK:
+        handleBlockClick(action.piece);
+        Store.emitChange();
+        break;
+      case Constants.SHUFFLE_BOARD:
+        shuffleBoard();
+        Store.emitChange();
+        break;
+    }
+    return true;
+  }, {
 
   /**
    * Set the application state
@@ -125,25 +147,44 @@ var Store = assign({}, EventEmitter.prototype, {
    */
   getState: function () {
     return _state;
-  },
-
-  dispatcherIndex: Dispatcher.register(function(payload) {
-    var action = payload.action;
-
-    switch (action.actionType) {
-      case Constants.HANDLE_BLOCK_CLICK:
-        handleBlockClick(action.piece);
-        Store.emitChange();
-        break;
-      case Constants.SHUFFLE_BOARD:
-        shuffleBoard();
-        Store.emitChange();
-        break;
-    }
-
-    return true;
-  })
-
+  }
 });
+
+//var Store = assign({}, BaseStore, {
+
+  /**
+   * Set the application state
+   * @param {object} state the new state
+   */
+  //setState: function (state) {
+    //_state = state;
+  //},
+
+  /**
+   * Get the application state
+   * @return {object} application state
+   */
+  //getState: function () {
+    //return _state;
+  //},
+
+  //dispatcherIndex: Dispatcher.register(function(payload) {
+    //var action = payload.action;
+
+    //switch (action.actionType) {
+      //case Constants.HANDLE_BLOCK_CLICK:
+        //handleBlockClick(action.piece);
+        //Store.emitChange();
+        //break;
+      //case Constants.SHUFFLE_BOARD:
+        //shuffleBoard();
+        //Store.emitChange();
+        //break;
+    //}
+
+    //return true;
+  //})
+
+//});
 
 module.exports = Store;
