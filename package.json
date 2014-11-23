@@ -25,7 +25,7 @@
     "webpack": "^1.4.13"
   },
   "dependencies": {
-    "flux": "^2.0.1",
+    "donburi-model": "0.0.1",
     "react": "^0.12.0"
   }
 }

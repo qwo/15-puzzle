@@ -1,12 +1,15 @@
 var React = require('react');
 var assign = require('react/lib/Object.assign');
 var Style = require('../Style');
-var Actions = require('../Actions');
+var Model = require('../Model');
+var Constants = require('../Constants');
 var PureRenderClassConstructor = require('./utils/PureRenderClassConstructor');
 
 var Block = PureRenderClassConstructor({
   _handleClick: function () {
-    Actions.handleBlockClick(this.props.piece);
+    Model.request(Constants.HANDLE_BLOCK_CLICK, {
+      piece: this.props.piece
+    });
   },
 
   render: function () {

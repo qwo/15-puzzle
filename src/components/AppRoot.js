@@ -1,28 +1,28 @@
 var React = require('react');
-var Store = require('../Store');
 var Style = require('../Style');
-var Actions = require('../Actions');
+var Model = require('../Model');
+var Constants = require('../Constants');
 var Board = require('./Board');
 
 var AppRoot = React.createClass({
   _handleShuffleClick: function () {
-    Actions.shuffleBoard();
+    Model.request(Constants.SHUFFLE_BOARD);
   },
 
   getInitialState: function() {
-    return Store.getState();
-  },
-
-  componentDidMount: function() {
-    Store.addChangeListener(this._onChange);
-  },
-
-  componentWillUnmount: function() {
-    Store.removeChangeListener(this._onChange);
+    return Model.getState();
   },
 
   _onChange: function () {
-    this.setState(Store.getState());
+    this.setState(Model.getState());
+  },
+
+  componentDidMount: function () {
+    Model.subscribe(this._onChange);
+  },
+
+  componentWillUnmount: function () {
+    Model.unsubscribe(this._onChange);
   },
 
   render: function () {
